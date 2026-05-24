@@ -1,0 +1,3 @@
+2025-03-27 12:17:54.759 [info] file:///Users/monalisa/fizzbuzz.js Similar code at  [Ln 2, Col 8] let i = 1; i <= 100; i++) {  let output = '';  if (i % 3 === 0) {  output += 'Fizz';...
+2025-03-27 12:17:54.759 [info] License: unknown, URL: https://github.com/auraecosystem/octo-repo/blob/8563f3b1d4f33952b22212b86e745539d1567ed1/example/fizzBuzz.js
+2025-03-27 12:17:54.759 [info] License: MIT, URL: https://github.com/auraecosystem/monalisa/blob/7e974691f4c8e6bc55f9b50688f05d746d1bc52b/exercises/2/fizz-buzz.js
