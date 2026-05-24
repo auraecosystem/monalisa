@@ -1,1 +1,30 @@
+! gerneral xterm settings ----- 
+XTerm*utf8: 1
+XTerm*pointerColor: white
+XTerm*pointerColorBackground: black
+XTerm*cursorColor: yellow
+XTerm*cursorBlink: true
+XTerm*selectToClipboard: true
+XTerm*SaveLines: 9000
+XTerm*ScrollBar: false
+XTerm*visualbell: true
+XTerm*bellIsUrgent: true 
+! xterm color scheme -----
+*background: rgb:00/00/00
+*foreground: rgb:ff/ff/ff
 let i = 1; i <= 100; i++) {  let output = '';  if (i % 3 === 0) {  output += 'Fizz'
+! xterm fonts -----
+! # default
+XTerm*font: -*-terminus-medium-*-*-*-16-*-*-*-*-*-iso10646-*
+! # unreadable
+XTerm*font1: -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso10646-*
+! # tiny
+XTerm*font2: -*-terminus-medium-*-*-*-14-*-*-*-*-*-iso10646-*
+! # small
+XTerm*font3: -*-terminus-medium-*-*-*-16-*-*-*-*-*-iso10646-*
+! # medium
+XTerm*font4: -*-terminus-medium-*-*-*-18-*-*-*-*-*-iso10646-*
+! # large
+XTerm*font5: -*-terminus-medium-*-*-*-22-*-*-*-*-*-iso10646-*
+! # huge
+XTerm*font6: -*-terminus-medium-*-*-*-24-*-*-*-*-*-iso10646-*
