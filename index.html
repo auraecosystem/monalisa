@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ana 💘 Mike</title>
+  <style>
+    :root{
+      --pink:#ff3b7a;
+      --bg1:#fff0f6;
+      --bg2:#fff7fb;
+      --text:#222;
+      --card:#ffffffcc;
+      --shadow: 0 18px 40px rgba(0,0,0,.12);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, var(--bg1), transparent 55%),
+        radial-gradient(circle at 80% 15%, var(--bg2), transparent 60%),
+        linear-gradient(180deg, #fff, #ffe6f0);
+      overflow-x:hidden;
+      overflow-y:auto;
+    }
+
+    .front-img{
+      max-width: 160px;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 12px 25px rgba(0,0,0,.18);
+      display:block;
+    }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 18px 16px 80px;
+      min-height: 100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+
+    /* Page 2 monkey */
+    .second-img{
+      max-width: 100%;
+      max-height: 180px; /* fits inside .big */
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display:block;
+    }
+
+    /* Page 3 rod */
+    .third-img{
+      max-width: 100%;
+      max-height: 280px; /* allow full visibility */
+      width: auto;
+      height: auto;
+      object-fit: contain;      /* show whole image */
+      transform: scaleX(1.25);  /* stretch sideways */
+      display:block;
+    }
+
+    .caption{
+      margin-top: 8px;
+      font-size: 13px;
+      opacity: 0.75;
+      text-align: center;
+    }
+
+    .card{
+      width:min(760px, 96vw);
+      background: var(--card);
+      border: 1px solid rgba(255,59,122,.18);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: 20px 18px;
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+      margin-top: 14px;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid rgba(255,59,122,.22);
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+      font-weight:800;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--pink);
+      box-shadow: 0 0 0 6px rgba(255,59,122,.15);
+    }
+    h1{
+      margin: 8px 0 6px;
+      font-size: clamp(28px, 4vw, 48px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      text-align:center;
+    }
+    .sub{
+      margin:0 0 14px;
+      text-align:center;
+      opacity:.85;
+      font-size: 15px;
+    }
+    .stage{
+      margin-top: 10px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+      position:relative;
+      min-height: 340px;
+    }
+    .page{display:none; width:100%;}
+    .page.active{display:block;}
+
+    .big{
+      display:grid;
+      place-items:center;
+      height: 180px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,59,122,.22), transparent 60%),
+        radial-gradient(circle at 70% 55%, rgba(255,122,168,.18), transparent 65%),
+        linear-gradient(180deg, #fff, #fff0f7);
+      border: 1px solid rgba(255,59,122,.18);
+      box-shadow: 0 16px 30px rgba(0,0,0,.10);
+      overflow:hidden;
+    }
+
+    /* Page 3: bigger box so image fits fully */
+    #page3 .big{
+      height: 300px;
+      overflow:hidden; /* keep the nice rounded frame */
+    }
+
+    .emoji{
+      font-size: 72px;
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.18));
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+    .btnrow{
+      margin-top: 14px;
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      position:relative;
+    }
+    button{
+      cursor:pointer;
+      border:0;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-weight: 900;
+      font-size: 16px;
+      transition: transform .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:active{transform: translateY(1px) scale(.99)}
+    .yes{
+      background: linear-gradient(180deg, var(--pink), #ff1f63);
+      color:#fff;
+      box-shadow: 0 16px 30px rgba(255,59,122,.24);
+    }
+    .no{
+      background:#fff;
+      color: var(--pink);
+      border: 2px solid rgba(255,59,122,.35);
+      box-shadow: 0 16px 30px rgba(0,0,0,.08);
+      position:absolute;
+      left: 55%;
+      top: 0;
+    }
+    .hint{
+      text-align:center;
+      font-size: 13px;
+      opacity:.75;
+      margin-top: 10px;
+    }
+
+    .confetti{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      display:none;
+    }
+    .confetti.show{display:block;}
+    .c{
+      position:absolute;
+      top:-10px;
+      width:10px;
+      height:16px;
+      border-radius:4px;
+      opacity:.9;
+      animation: fall 1.6s linear forwards;
+    }
+    @keyframes fall{
+      to{ transform: translateY(110vh) rotate(360deg); opacity: 1;}
+    }
+
+    .message{
+      margin-top: 14px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: 18px;
+      padding: 14px;
+      line-height:1.45;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      white-space: pre-wrap;
+      font-size: 15px;
+    }
+
+    .genCard{
+      margin-top: 12px;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:center;
+      text-align:center;
+    }
+    .reason{
+      font-size: 16px;
+      font-weight: 900;
+      line-height:1.25;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,59,122,.08);
+      border: 1px solid rgba(255,59,122,.18);
+      width:100%;
+    }
+    .small{
+      font-size: 12px;
+      opacity:.7;
+    }
+
+    .photo-grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap:12px;
+    }
+    .photo-grid img{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      border-radius:18px;
+      box-shadow: 0 12px 25px rgba(0,0,0,.15);
+      display:block;
+      background:#fff;
+    }
+
+    .footer{
+      text-align:center;
+      margin-top:12px;
+      font-size: 12px;
+      opacity:.65;
+    }
+
+    .heart{
+      position:fixed;
+      left:0; top:0;
+      pointer-events:none;
+      will-change: transform, opacity;
+      font-size: 18px;
+      opacity:.85;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.12));
+    }
+  </style>
+</head>
+
+<body>
+  <div class="confetti" id="confetti"></div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="top">
+        <div class="badge"><span class="dot"></span> Ana x Mike 💌</div>
+        <div class="badge" id="dateBadge">Feb 14</div>
+      </div>
+
+      <div class="stage">
+        <!-- PAGE 1 -->
+        <div class="page active" id="page1">
+          <h1>Hi Ana 💗</h1>
+          <p class="sub">I have a very important question… No foreshadowing pls</p>
+
+          <div class="big">
+            <img src="cat.jpg" alt="cute cat" class="front-img">
+          </div>
+
+          <div class="btnrow" style="height:72px;">
+            <button class="yes" id="nextBtn">Open the question ✨</button>
+          </div>
+
+          <div class="hint">might make you smile hopefully</div>
+        </div>
+
+        <!-- PAGE 2 -->
+        <div class="page" id="page2">
+          <h1>Ana… will you be my Valentine? 💘</h1>
+          <p class="sub">There is a correct answer. The voices will agree.</p>
+
+          <div class="big">
+            <!-- ✅ monkey image (rename file to thinking.png OR change src here) -->
+            <img src="thinking.png" alt="thinking monkey" class="second-img">
+          </div>
+
+          <div class="btnrow" id="btnArea" style="height:92px;">
+            <button class="yes" id="yesBtn">YES 💖</button>
+            <button class="no" id="noBtn">NO 🙃</button>
+          </div>
+
+          <div class="hint">Try pressing “NO” if you enjoy cardio</div>
+        </div>
+
+        <!-- PAGE 3 -->
+        <div class="page" id="page3">
+          <h1>YAYYYY!! 🥳💞</h1>
+          <p class="sub">Officially confirmed: you are my favorite brazilian baddie.</p>
+
+          <div class="big">
+            <img src="me.png" alt="me rn" class="third-img">
+          </div>
+          <div class="caption">me rn btw</div>
+
+          <div class="message">
+Happy Valentine’s Day, Ana 💗
+
+I love you a lot. 
+Thank you for being my favorite person to laugh with, talk with, and do life with.
+I’m really lucky it’s you.
+
+Love,
+Mike
+          </div>
+
+          <div class="genCard">
+            <div style="font-weight:900;">Reasons I like you:</div>
+            <div class="reason" id="reason">Click the button 😌</div>
+            <div class="btnrow" style="margin-top:0;">
+              <button class="yes" id="reasonBtn">Give me a reason 💘</button>
+              <button class="yes" id="reasonBtn2" style="background:linear-gradient(180deg,#ff7aa8,#ff3b7a);">
+                Another one 😤
+              </button>
+            </div>
+            <div class="small">(Warning: may be extremely accurate.)</div>
+          </div>
+
+          <h2 style="text-align:center; margin-top:24px;">Our photos 💞</h2>
+          <div class="photo-grid">
+            <img src="photo1.jpg" alt="Ana & Mike photo 1">
+            <img src="photo2.jpg" alt="Ana & Mike photo 2">
+            <img src="photo3.jpg" alt="Ana & Mike photo 3">
+            <img src="photo4.jpg" alt="Ana & Mike photo 4">
+            <!-- ✅ FIX: your repo has photo5.JPG (uppercase) -->
+            <img src="photo5.JPG" alt="Ana & Mike photo 5">
+            <img src="photo6.jpg" alt="Ana & Mike photo 6">
+          </div>
+
+          <div class="footer">Made by Mike (professional baddie) 💘</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional: put "song.mp3" in same folder -->
+  <audio id="music" preload="auto" loop>
+    <source src="song.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    // Date badge
+    const d = new Date();
+    $("dateBadge").textContent = `Feb 14, ${d.getFullYear()}`;
+
+    // Pages
+    function showPage(n){
+      ["page1","page2","page3"].forEach((p,i)=>{
+        $(p).classList.toggle("active", i === (n-1));
+      });
+    }
+
+    // Floating hearts
+    const heartEmojis = ["💗","💖","💘","💝","💕","💞"];
+    function spawnHeart(){
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+      const startX = Math.random() * window.innerWidth;
+      const startY = window.innerHeight + 10;
+      const drift = (Math.random() - 0.5) * 120;
+      const duration = 2600 + Math.random()*1400;
+      const size = 14 + Math.random()*18;
+      h.style.left = startX + "px";
+      h.style.top = startY + "px";
+      h.style.fontSize = size + "px";
+      document.body.appendChild(h);
+
+      const start = performance.now();
+      function tick(t){
+        const p = Math.min(1, (t - start) / duration);
+        const y = startY - p * (window.innerHeight + 180);
+        const x = startX + drift * p;
+        h.style.transform = `translate(${x-startX}px, ${y-startY}px)`;
+        h.style.opacity = String(1 - p);
+        if (p < 1) requestAnimationFrame(tick);
+        else h.remove();
+      }
+      requestAnimationFrame(tick);
+    }
+    setInterval(spawnHeart, 220);
+
+    // Optional music
+    const music = $("music");
+    let musicTried = false;
+    function tryPlayMusic(){
+      if (musicTried) return;
+      musicTried = true;
+      music.play().catch(()=>{});
+    }
+
+    $("nextBtn").addEventListener("click", ()=>{
+      tryPlayMusic();
+      showPage(2);
+      placeNoButton();
+    });
+
+    // NO button dodge
+    const noBtn = $("noBtn");
+    const area = $("btnArea");
+    function placeNoButton(){
+      const rect = area.getBoundingClientRect();
+      const bw = noBtn.offsetWidth || 90;
+      const bh = noBtn.offsetHeight || 44;
+
+      const minX = 8;
+      const maxX = rect.width - bw - 8;
+      const minY = 6;
+      const maxY = rect.height - bh - 6;
+
+      const x = minX + Math.random() * (maxX - minX);
+      const y = minY + Math.random() * (maxY - minY);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+    function dodge(){
+      placeNoButton();
+      noBtn.style.transform = "scale(1.03)";
+      setTimeout(()=> noBtn.style.transform = "scale(1)", 120);
+    }
+    noBtn.addEventListener("mouseenter", dodge);
+    noBtn.addEventListener("touchstart", (e)=>{ e.preventDefault(); dodge(); }, {passive:false});
+    noBtn.addEventListener("click", dodge);
+
+    // YES -> Page 3 + confetti
+    $("yesBtn").addEventListener("click", ()=>{
+      tryPlayMusic();
+      showPage(3);
+      launchConfetti();
+      showRandomReason();
+    });
+
+    function launchConfetti(){
+      const conf = $("confetti");
+      conf.classList.add("show");
+      const count = 160;
+      const colors = ["#ff3b7a","#ff7aa8","#ffd1e1","#ffffff","#ffb3c9"];
+      for(let i=0;i<count;i++){
+        const el = document.createElement("div");
+        el.className = "c";
+        el.style.left = (Math.random()*100) + "vw";
+        el.style.animationDelay = (Math.random()*0.6) + "s";
+        el.style.transform = `rotate(${Math.random()*360}deg)`;
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.width = (8 + Math.random()*10) + "px";
+        el.style.height = (10 + Math.random()*18) + "px";
+        conf.appendChild(el);
+        el.addEventListener("animationend", ()=> el.remove());
+      }
+      setTimeout(()=> conf.classList.remove("show"), 2300);
+    }
+
+    // Reason generator
+    const reasons = [
+  "I love your eyes.",
+  "You make me laugh without even trying.",
+  "You’re always there when I need you.",
+  "You make hard days easier just by being around.",
+  "You understand me",
+  "You make me feel comfortable being myself.",
+  "You make silence feel comfortable.",
+  "I like who I am when I’m with you.",
+  "You notice small things",
+  "You make everyday plans feel like something to look forward to.",
+  "You’re honest",
+  "You make me feel at home",
+  "You care deeply,",
+  "You’re thoughtful",
+  "You make me feel understood without explaining everything.",
+  "You’re patient with me.",
+  "You bring a sense of peace into my life.",
+  "You make ordinary days better.",
+  "You feel safe to be around.",
+  "You support me",
+  "You’re kind",
+  "You make life feel easier.",
+  "You choose me every day.",
+  "You make love feel easy.",
+  "You actually listen.",
+  "You make normal moments feel special.",
+  "I like how you take care of people you care about.",
+  "You’re easy to be around.",
+  "You’re my favorite person to talk to.",
+  "You make me laugh when I don’t feel like laughing.",
+  "You’re reliable.",
+  "You make me feel lucky in a very simple way.",
+  "You show up when it matters.",
+  "I like the way you see the world.",
+  "You make me feel calm.",
+  "You make me feel wanted.",
+  "Because you’re Ana. That’s enough."
+];
+
+    let lastReason = -1;
+
+    function showRandomReason(){
+      let idx = Math.floor(Math.random() * reasons.length);
+      if (idx === lastReason && reasons.length > 1) idx = (idx + 1) % reasons.length;
+      lastReason = idx;
+      $("reason").textContent = reasons[idx];
+      $("reason").animate([{transform:"scale(0.98)", opacity:0.6},{transform:"scale(1)", opacity:1}], {duration:160});
+    }
+
+    $("reasonBtn").addEventListener("click", showRandomReason);
+    $("reasonBtn2").addEventListener("click", showRandomReason);
+  </script>
+</body>
+</html>
